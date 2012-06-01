@@ -87,7 +87,7 @@ class Grid
         player = null
         switch rowValue
           when 1, 6
-        	  player = new Pawn(if index < 2 then TOP else BOTTOM)
+            player = new Pawn(if index < 2 then TOP else BOTTOM)
           when 0, 7
             switch j
               when 0, 7
@@ -109,17 +109,15 @@ class Grid
     @grid[x]?[y]
     
 class Player
-  setPosition: (position) ->
-    @position = position
+  setPosition: (@position) ->
 
   potentialMoves: () ->
-    []
+    throw Error("Not Implemented")
 
   delete: () ->
     @deleted = true
 
-  setColor: (color) ->
-    @color = color  
+  setColor: (@color) ->
 
   getColor: () ->
     @color
