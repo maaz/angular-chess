@@ -22,13 +22,24 @@ class ChessCtrl
 
     $scope.isSelected = (x, y) ->
       classes = ['box']
+      box_class = 'chess-white'
+        
+      isBlack = (x % 2 == 0)
+      isBlack = if (y % 2 == 0) then isBlack else !isBlack 
+      
+      classes.push(if isBlack then 'chess-black' else 'chess-white')
+      
       position = $scope.grid.getPosition(x, y)
+      classes.push "has-player" if position?.getPlayer()?
       if $scope.selectedPosition
         if $scope.selectedPosition == position
           classes.push 'current-selected'
         else if $scope.selectedPosition.canReach(position)
           classes.push 'reachable'
-      classes.join ' '      
+          if position?.hasPlayer()
+	          classes.push 'chess-kill'
+	  
+      return classes.join ' '      
 
 
     $scope.select = (x, y) ->
@@ -49,7 +60,6 @@ class ChessCtrl
         $scope.selectedPosition = null
       # Now, we are selecting the final move position.
       else
-        debugger;
         if $scope.selectedPosition.canReach(position)
           player = $scope.selectedPosition.getPlayer()
           if position.hasPlayer()

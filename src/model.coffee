@@ -1,4 +1,4 @@
-# Creats a new Position class
+Rook# Creats a new Position class
 # In Chess all items are positions.
 
 TOTAL_HEIGHT = 8;
@@ -91,11 +91,11 @@ class Grid
           when 0, 7
             switch j
               when 0, 7
-                player = new Haathi()
+                player = new Rook()
               when 1, 6
-                player = new Camel()
+                player = new Knight()
               when 2, 5
-                player = new Horse()
+                player = new Bishop()
               when 3
                 player = new Queen()
               when 4
@@ -130,7 +130,10 @@ class Pawn extends Player
   constructor: (@ascending) ->
 
   getLabel: () ->
-    "Pawn-" + @color
+    if @color == 'white'
+      '\u2659'
+    else
+      '\u265F'
 
   potentialMoves: () ->
     result = [] 
@@ -147,13 +150,16 @@ class Pawn extends Player
 
 
 ##############################################################################################################
-# Start Class Haathi.
-# Haathi moves along a straight line always.
+# Start Class Rook.
+# Rook moves along a straight line always.
 ##############################################################################################################
-class Haathi extends Player
+class Rook extends Player
 
   getLabel: () ->
-    "Haathi-" + @color
+    if @color == 'white'
+      '\u2656'
+    else
+      '\u265C'
 
   potentialMoves: () ->
 	  result = []
@@ -163,13 +169,16 @@ class Haathi extends Player
 	  return result
 
 ##############################################################################################################
-# Start Class Camel.
-# Camel moves across only.
+# Start Class Bishop.
+# Bishop moves across only.
 ##############################################################################################################
-class Camel extends Player
+class Bishop extends Player
 
   getLabel: () ->
-    "Camel-" + @color
+    if @color == 'white'
+      '\u2657'
+    else
+      '\u265D'
 
   potentialMoves: ->
     result = []
@@ -180,13 +189,16 @@ class Camel extends Player
     return result
 
 ##############################################################################################################
-# Start Class Horse.
-# Horse moves two and half
+# Start Class Knight.
+# Knight moves two and half
 ##############################################################################################################
-class Horse extends Player
+class Knight extends Player
 
   getLabel: () ->
-    "Horse-" + @color
+    if @color == 'white'
+      '\u2658'
+    else
+      '\u265E'
 
   potentialMoves: ->
     result = []
@@ -220,12 +232,15 @@ class Horse extends Player
 
 ##############################################################################################################
 # Start Class Queen.
-# Queen goes everywhere except Horse
+# Queen goes everywhere except Knight
 ##############################################################################################################
 class Queen extends Player
   
   getLabel: () ->
-    "Queen-" + @color
+    if @color == 'white'
+      '\u2655'
+    else
+      '\u265B'
 
   potentialMoves: () ->
     result = []
@@ -244,15 +259,24 @@ class Queen extends Player
 ##############################################################################################################
 class King extends Player
   getLabel: () ->
-    "KING-" + @color
+    if @color == 'white'
+      '\u2654'
+    else
+      '\u265A'
 
   potentialMoves: () ->
     result = []
 
-    for fn in [acrossFn(TOP, RIGHT), acrossFn(TOP, LEFT), acrossFn(BOTTOM, LEFT), acrossFn(BOTTOM, RIGHT)]
-      result.push fn(@position) if fn(@position) 
-
-    for fn in [straightFn(TOP), straightFn(BOTTOM), sideWaysFn(RIGHT), sideWaysFn(BOTTOM)]
-      result.push fn(@position) if fn(@position)
+    for fn in [
+      acrossFn(TOP, RIGHT),
+      acrossFn(TOP, LEFT),
+      acrossFn(BOTTOM, LEFT),
+      acrossFn(BOTTOM, RIGHT),
+      straightFn(TOP),
+      straightFn(BOTTOM),
+      sideWaysFn(RIGHT),
+      sideWaysFn(BOTTOM)
+      ]
+      result.push fn(@position) if (fn(@position) and (!fn(@position).getPlayer()? or fn(@position).getPlayer().getColor() != @color))
 
     return result

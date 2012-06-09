@@ -1,24 +1,44 @@
 <!doctype html>
+
 <html ng-app>
 	<head>
+		<meta charset="UTF-8">
 		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
 		<script src="http://code.angularjs.org/angular-1.0.0rc10.min.js"></script>
 		<script src="lib/model.js"></script>
 		<script src="lib/chess.js"></script>
 		<style type="text/css">
 		  .box {
-		  	padding: 10px;
+		  	padding: 25px 6px 0 14px;
 		  	width: 50px;
 		  	height: 50px;
 		  	display: block;
+		    border: 1px solid #000;
+				font-size: 40px;
 		  }
 		  .current-selected {
-		  	border: 2px solid #000;
+		  	border: 3px solid #000;
+		    cursor: pointer;
 		  }
+		  
+		  .has-player {
+				cursor: pointer;
+			}
 
 		  .reachable {
-		  	background-color: #bbb;
+		  	background-color: Khaki !important;
+		    cursor: pointer;
 		  }
+			.chess-white {
+				background-color: #fdfdf0;
+			}
+			.chess-black {
+				background-color: #aaa;
+			}
+			.chess-kill {
+				border: 2px solid red;
+			}
+		
 		</style>
 	</head>
 	
@@ -32,89 +52,17 @@
 			  </br>
 			  <span class="alert-error">{{errorMessage}}</span>
 			</div>
+
 			<div>
-				<table class="table table-bordered table-condensed">
-					<tr>
-						<td><span ng-class="isSelected(7,0)" ng-click="select(7,0)"> {{ getLabel(7,0) }} </span>
-						<td><span ng-class="isSelected(7,1)" ng-click="select(7,1)"> {{ getLabel(7,1) }} </span>
-						<td><span ng-class="isSelected(7,2)" ng-click="select(7,2)"> {{ getLabel(7,2) }} </span>
-						<td><span ng-class="isSelected(7,3)" ng-click="select(7,3)"> {{ getLabel(7,3) }} </span>
-						<td><span ng-class="isSelected(7,4)" ng-click="select(7,4)"> {{ getLabel(7,4) }} </span>
-						<td><span ng-class="isSelected(7,5)" ng-click="select(7,5)"> {{ getLabel(7,5) }} </span>
-						<td><span ng-class="isSelected(7,6)" ng-click="select(7,6)"> {{ getLabel(7,6) }} </span>
-						<td><span ng-class="isSelected(7,7)" ng-click="select(7,7)"> {{ getLabel(7,7) }} </span>
-					</tr>
-					<tr>
-						<td><span ng-class="isSelected(6,0)" ng-click="select(6,0)"> {{ getLabel(6,0) }} </span>
-						<td><span ng-class="isSelected(6,1)" ng-click="select(6,1)"> {{ getLabel(6,1) }} </span>
-						<td><span ng-class="isSelected(6,2)" ng-click="select(6,2)"> {{ getLabel(6,2) }} </span>
-						<td><span ng-class="isSelected(6,3)" ng-click="select(6,3)"> {{ getLabel(6,3) }} </span>
-						<td><span ng-class="isSelected(6,4)" ng-click="select(6,4)"> {{ getLabel(6,4) }} </span>
-						<td><span ng-class="isSelected(6,5)" ng-click="select(6,5)"> {{ getLabel(6,5) }} </span>
-						<td><span ng-class="isSelected(6,6)" ng-click="select(6,6)"> {{ getLabel(6,6) }} </span>
-						<td><span ng-class="isSelected(6,7)" ng-click="select(6,7)"> {{ getLabel(6,7) }} </span>
-					</tr>
-					<tr>
-						<td><span ng-class="isSelected(5,0)" ng-click="select(5,0)"> {{ getLabel(5,0) }} </span>
-						<td><span ng-class="isSelected(5,1)" ng-click="select(5,1)"> {{ getLabel(5,1) }} </span>
-						<td><span ng-class="isSelected(5,2)" ng-click="select(5,2)"> {{ getLabel(5,2) }} </span>
-						<td><span ng-class="isSelected(5,3)" ng-click="select(5,3)"> {{ getLabel(5,3) }} </span>
-						<td><span ng-class="isSelected(5,4)" ng-click="select(5,4)"> {{ getLabel(5,4) }} </span>
-						<td><span ng-class="isSelected(5,5)" ng-click="select(5,5)"> {{ getLabel(5,5) }} </span>
-						<td><span ng-class="isSelected(5,6)" ng-click="select(5,6)"> {{ getLabel(5,6) }} </span>
-						<td><span ng-class="isSelected(5,7)" ng-click="select(5,7)"> {{ getLabel(5,7) }} </span>
-					</tr>
-					<tr>
-						<td><span ng-class="isSelected(4,0)" ng-click="select(4,0)"> {{ getLabel(4,0) }} </span>
-						<td><span ng-class="isSelected(4,1)" ng-click="select(4,1)"> {{ getLabel(4,1) }} </span>
-						<td><span ng-class="isSelected(4,2)" ng-click="select(4,2)"> {{ getLabel(4,2) }} </span>
-						<td><span ng-class="isSelected(4,3)" ng-click="select(4,3)"> {{ getLabel(4,3) }} </span>
-						<td><span ng-class="isSelected(4,4)" ng-click="select(4,4)"> {{ getLabel(4,4) }} </span>
-						<td><span ng-class="isSelected(4,5)" ng-click="select(4,5)"> {{ getLabel(4,5) }} </span>
-						<td><span ng-class="isSelected(4,6)" ng-click="select(4,6)"> {{ getLabel(4,6) }} </span>
-						<td><span ng-class="isSelected(4,7)" ng-click="select(4,7)"> {{ getLabel(4,7) }} </span>
-					</tr>
-					<tr>
-						<td><span ng-class="isSelected(3,0)" ng-click="select(3,0)"> {{ getLabel(3,0) }} </span>
-						<td><span ng-class="isSelected(3,1)" ng-click="select(3,1)"> {{ getLabel(3,1) }} </span>
-						<td><span ng-class="isSelected(3,2)" ng-click="select(3,2)"> {{ getLabel(3,2) }} </span>
-						<td><span ng-class="isSelected(3,3)" ng-click="select(3,3)"> {{ getLabel(3,3) }} </span>
-						<td><span ng-class="isSelected(3,4)" ng-click="select(3,4)"> {{ getLabel(3,4) }} </span>
-						<td><span ng-class="isSelected(3,5)" ng-click="select(3,5)"> {{ getLabel(3,5) }} </span>
-						<td><span ng-class="isSelected(3,6)" ng-click="select(3,6)"> {{ getLabel(3,6) }} </span>
-						<td><span ng-class="isSelected(3,7)" ng-click="select(3,7)"> {{ getLabel(3,7) }} </span>
-					</tr>
-					<tr>
-						<td><span ng-class="isSelected(2,0)" ng-click="select(2,0)"> {{ getLabel(2,0) }} </span>
-						<td><span ng-class="isSelected(2,1)" ng-click="select(2,1)"> {{ getLabel(2,1) }} </span>
-						<td><span ng-class="isSelected(2,2)" ng-click="select(2,2)"> {{ getLabel(2,2) }} </span>
-						<td><span ng-class="isSelected(2,3)" ng-click="select(2,3)"> {{ getLabel(2,3) }} </span>
-						<td><span ng-class="isSelected(2,4)" ng-click="select(2,4)"> {{ getLabel(2,4) }} </span>
-						<td><span ng-class="isSelected(2,5)" ng-click="select(2,5)"> {{ getLabel(2,5) }} </span>
-						<td><span ng-class="isSelected(2,6)" ng-click="select(2,6)"> {{ getLabel(2,6) }} </span>
-						<td><span ng-class="isSelected(2,7)" ng-click="select(2,7)"> {{ getLabel(2,7) }} </span>
-					</tr>
-					<tr>
-						<td><span ng-class="isSelected(1,0)" ng-click="select(1,0)"> {{ getLabel(1,0) }} </span>
-						<td><span ng-class="isSelected(1,1)" ng-click="select(1,1)"> {{ getLabel(1,1) }} </span>
-						<td><span ng-class="isSelected(1,2)" ng-click="select(1,2)"> {{ getLabel(1,2) }} </span>
-						<td><span ng-class="isSelected(1,3)" ng-click="select(1,3)"> {{ getLabel(1,3) }} </span>
-						<td><span ng-class="isSelected(1,4)" ng-click="select(1,4)"> {{ getLabel(1,4) }} </span>
-						<td><span ng-class="isSelected(1,5)" ng-click="select(1,5)"> {{ getLabel(1,5) }} </span>
-						<td><span ng-class="isSelected(1,6)" ng-click="select(1,6)"> {{ getLabel(1,6) }} </span>
-						<td><span ng-class="isSelected(1,7)" ng-click="select(1,7)"> {{ getLabel(1,7) }} </span>
-					</tr>
-					<tr>
-						<td><span ng-class="isSelected(0,0)" ng-click="select(0,0)"> {{ getLabel(0,0) }} </span>
-						<td><span ng-class="isSelected(0,1)" ng-click="select(0,1)"> {{ getLabel(0,1) }} </span>
-						<td><span ng-class="isSelected(0,2)" ng-click="select(0,2)"> {{ getLabel(0,2) }} </span>
-						<td><span ng-class="isSelected(0,3)" ng-click="select(0,3)"> {{ getLabel(0,3) }} </span>
-						<td><span ng-class="isSelected(0,4)" ng-click="select(0,4)"> {{ getLabel(0,4) }} </span>
-						<td><span ng-class="isSelected(0,5)" ng-click="select(0,5)"> {{ getLabel(0,5) }} </span>
-						<td><span ng-class="isSelected(0,6)" ng-click="select(0,6)"> {{ getLabel(0,6) }} </span>
-						<td><span ng-class="isSelected(0,7)" ng-click="select(0,7)"> {{ getLabel(0,7) }} </span>
-					</tr>
-				</table>
-			</div>
+				<table class="table table-condensed">
+					<tr ng-repeat="i in [7,6,5,4,3,2,1,0]">
+						 <td ng-repeat="j in [0,1,2,3,4,5,6,7]">
+							<span ng-class="isSelected(i, j)" ng-click="select(i, j)"> {{getLabel(i,j)}}</span>
+						 </td>
+					</tr> 
+				</table>	
+			</div>	
+					
 		</div>
+		
 	</body>	
