@@ -1,4 +1,4 @@
-Rook# Creats a new Position class
+# Creats a new Position class
 # In Chess all items are positions.
 
 TOTAL_HEIGHT = 8;

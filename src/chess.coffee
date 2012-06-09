@@ -22,7 +22,6 @@ class ChessCtrl
 
     $scope.isSelected = (x, y) ->
       classes = ['box']
-      box_class = 'chess-white'
         
       isBlack = (x % 2 == 0)
       isBlack = if (y % 2 == 0) then isBlack else !isBlack 
