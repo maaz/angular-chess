@@ -2,4 +2,6 @@ angular-chess
 =============
 
 Chess Application in Angularjs
-Hosted on github pages
+
+Demo: http://maaz.github.com/angular-chess/
+
